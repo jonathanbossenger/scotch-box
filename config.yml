@@ -1,4 +1,0 @@
-#site specific settings
-site:
-  ip: 192.168.33.xx
-  sitename: sitename
