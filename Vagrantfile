@@ -14,47 +14,43 @@ Vagrant.configure("2") do |config|
     
     # Optional NFS. Make sure to remove other synced_folder line too
     #config.vm.synced_folder ".", "/var/www/public", :nfs => { :mount_options => ["dmode=777","fmode=666"] }
+	
+    config.vm.provider "virtualbox" do |vb|
+         # Display the VirtualBox GUI when booting the machine
+         # vb.gui = true
+
+         # Customize the amount of memory on the VM:
+         vb.memory = "1024"
+    end
 
     config.vm.provision "shell", :args => [settings['site']['sitename']], inline: <<-SHELL
 
-		sitename=$1
-		scotchbox="/etc/apache2/sites-enabled/scotchbox.local.conf"
-		if [ -f "$scotchbox" ]
-		then
-			echo "Disabling scotchbox.local.conf. Will probably tell you to restart Apache..."
-			sudo a2dissite scotchbox.local.conf
-			echo "So let's restart apache..."
-			sudo service apache2 restart
-		else
-			echo "scotchbox.local.conf not found. No cleanup needed."
-		fi
-		
-		phpmyadmin="/etc/phpmyadmin"
-		if [ -d "$phpmyadmin" ]
-		then
-			echo "PHPMyAdmin already installed."
-		else
-			echo "Installing PHPMyAdmin..."
-			PASSWORD='password'
-			mysql -uroot -proot -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$PASSWORD'); FLUSH PRIVILEGES;"
-			sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
-			sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $PASSWORD"
-			sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password $PASSWORD"
-			sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $PASSWORD"
-			sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2"
-			sudo apt-get -y install phpmyadmin
-		fi
-		
-		# MailCatcher check
-		if pgrep "mailcatcher" > /dev/null
-		then
-			echo "MailCatcher already running on http://$sitename:1080"
-		else
-			echo "Starting MailCatcher"
-			mailcatcher --http-ip=0.0.0.0
-			echo "MailCatcher available on http://$sitename:1080"
-		fi
-		
+	sitename=$1
+	scotchbox="/etc/apache2/sites-enabled/scotchbox.local.conf"
+	if [ -f "$scotchbox" ]
+	then
+		echo "Disabling scotchbox.local.conf. Will probably tell you to restart Apache..."
+		sudo a2dissite scotchbox.local.conf
+		echo "So let's restart apache..."
+		sudo service apache2 restart
+	else
+		echo "scotchbox.local.conf not found. No cleanup needed."
+	fi
+
+	phpmyadmin="/etc/phpmyadmin"
+	if [ -d "$phpmyadmin" ]
+	then
+		echo "PHPMyAdmin already installed."
+	else
+		echo "Installing PHPMyAdmin..."
+		PASSWORD='password'
+		mysql -uroot -proot -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$PASSWORD'); FLUSH PRIVILEGES;"
+		sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
+		sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $PASSWORD"
+		sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/admin-pass password $PASSWORD"
+		sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $PASSWORD"
+		sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2"
+		sudo apt-get -y install phpmyadmin
+	fi
     SHELL
-	
 end
