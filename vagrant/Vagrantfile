@@ -7,6 +7,9 @@ settings = YAML.load_file 'vagrant.yml'
 
 Vagrant.configure("2") do |config|
 
+    # Optional, disable update checks (for when working offline)
+    # config.vm.box_check_update = false
+
     config.vm.box = "scotch/box"
     config.vm.network "private_network", ip: settings['site']['ip']
     config.vm.hostname = settings['site']['sitename']

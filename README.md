@@ -1,6 +1,19 @@
 Scotch Box
 ==========
 
+#This is my personal fork of Scotch Box, used for WordPress development purposes.
+Over and above all the default Scotch Box goodness (see below) I have included the following:
+
+1. Added option to disable update checks, when working offline
+1. Moved Vagrant files to separate vagrant directory
+1. Configuration file (vagrant.yml) for setting sitename, ip address and MySQL password.
+1. Set VM memory at 1GB 
+1. Shell provisioners:
+    1. Clean up scotchbox.local Apache config
+    1. Install PHPMyAdmin and create a default database based on configuration settings
+    1. Install Xdebug and prepare for PHPStorm usages
+    1. Always run MailCatcher on port 1080
+    
 ## Check out the official docs at: [box.scotch.io][16]
 ## [Read the getting started article](https://scotch.io/bar-talk/introducing-scotch-box-a-vagrant-lamp-stack-that-just-works)
 ## [Read the 2.0 release article](https://scotch.io/bar-talk/announcing-scotch-box-2-0-our-dead-simple-vagrant-lamp-stack-improved)
