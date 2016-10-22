@@ -1,7 +1,7 @@
 Scotch Box
 ==========
 
-#This is my personal fork of Scotch Box, used for WordPress development purposes.
+#This is my personal fork of Scotch Box, used primarly for WordPress development purposes.
 Over and above all the default Scotch Box goodness (see below) I have included the following:
 
 1. Added option to disable update checks, when working offline
