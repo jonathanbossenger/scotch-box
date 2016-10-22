@@ -14,6 +14,19 @@ Over and above all the default Scotch Box goodness (see below) I have included t
     1. Install Xdebug and prepare for PHPStorm usages
     1. Always run MailCatcher on port 1080
     
+To use this repo the way I do
+    
+1. Clone the repo to some place on your computer    
+1. Copy the 'vagrant' folder to your project web root
+1. Change directory to the vagrant folder
+1. Start ScotchBox        
+        
+```bash
+vagrant up
+```
+    
+Enjoy!    
+    
 ## Check out the official docs at: [box.scotch.io][16]
 ## [Read the getting started article](https://scotch.io/bar-talk/introducing-scotch-box-a-vagrant-lamp-stack-that-just-works)
 ## [Read the 2.0 release article](https://scotch.io/bar-talk/announcing-scotch-box-2-0-our-dead-simple-vagrant-lamp-stack-improved)
