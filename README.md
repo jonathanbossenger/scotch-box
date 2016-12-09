@@ -8,6 +8,7 @@ Over and above all the default Scotch Box goodness (see below) I have included t
 1. Moved Vagrant files to separate vagrant directory
 1. Configuration file (vagrant.yml) for setting sitename, ip address and MySQL password.
 1. Set VM memory at 1GB 
+1. Set the VM machine name
 1. Shell provisioners:
     1. Clean up scotchbox.local Apache config
     1. Install PHPMyAdmin and create a default database based on configuration settings
