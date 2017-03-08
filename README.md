@@ -13,6 +13,8 @@ Over and above all the default Scotch Box goodness (see below) I have included t
     1. Clean up scotchbox.local Apache config
     1. Install PHPMyAdmin and create a default database based on configuration settings
     1. Install Xdebug and prepare for PHPStorm usages
+    1. Set the upload_max_filesize to something more usable
+    1. Create a default phpinfo() file
     1. Always run MailCatcher on port 1080
     
 To use this repo the way I do
@@ -25,7 +27,12 @@ To use this repo the way I do
 ```bash
 vagrant up
 ```
-    
+I recommend installing the Vagrant Hosts Updater(https://github.com/cogitatio/vagrant-hostsupdater) plugin to allow your system to manage writing to the hosts file automatically.
+
+```bash
+vagrant plugin install vagrant-hostsupdater
+```
+
 Enjoy!    
     
 ## Check out the official docs at: [box.scotch.io][16]
