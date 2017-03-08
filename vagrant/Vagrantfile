@@ -34,8 +34,6 @@ Vagrant.configure("2") do |config|
         then
             echo "Disabling scotchbox.local.conf. Will probably tell you to restart Apache..."
             sudo a2dissite scotchbox.local.conf
-            echo "So let's restart apache..."
-            sudo service apache2 restart
         else
             echo "scotchbox.local.conf not found. No cleanup needed."
         fi
@@ -58,6 +56,12 @@ Vagrant.configure("2") do |config|
         echo "Creating database, if it doesn't already exist"
         mysql -uroot -p$mysqlpassword -e "CREATE DATABASE IF NOT EXISTS $sitename;"
 
+        echo "Updating some PHP Variables"
+        sudo sed -i 's/upload_max_filesize\s*=.*/upload_max_filesize=16M/g' /etc/php5/apache2/php.ini
+
+        echo "Creating phpinfo file"
+        echo '<?php echo phpinfo(); ?>' > /var/www/public/info.php
+
         xdebug="/etc/php5/apache2/conf.d/20-xdebug.ini"
         if [ -f "$xdebug" ]
         then
@@ -69,8 +73,10 @@ Vagrant.configure("2") do |config|
             echo "xdebug.remote_enable=1" | sudo tee -a /etc/php5/apache2/conf.d/20-xdebug.ini
             echo "xdebug.remote_port=9000" | sudo tee -a /etc/php5/apache2/conf.d/20-xdebug.ini
             echo "xdebug.remote_host=$ip_address" | sudo tee -a /etc/php5/apache2/conf.d/20-xdebug.ini
-            sudo service apache2 restart
         fi
+        
+        echo "Restarting Apache after all the changes"
+        sudo service apache2 restart
 
         echo "Provisioning complete."
 
@@ -79,3 +85,4 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", inline: "/home/vagrant/.rbenv/shims/mailcatcher --http-ip=0.0.0.0", run: "always"
 
 end
+
