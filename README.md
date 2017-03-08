@@ -27,7 +27,7 @@ To use this repo the way I do
 ```bash
 vagrant up
 ```
-I recommend installing the Vagrant Hosts Updater(https://github.com/cogitatio/vagrant-hostsupdater) plugin to allow your system to manage writing to the hosts file automatically.
+I recommend installing the [Vagrant Hosts Updater](https://github.com/cogitatio/vagrant-hostsupdater) plugin to allow your system to manage writing to the hosts file automatically.
 
 ```bash
 vagrant plugin install vagrant-hostsupdater
